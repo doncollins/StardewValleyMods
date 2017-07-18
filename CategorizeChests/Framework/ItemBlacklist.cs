@@ -79,6 +79,14 @@ namespace StardewValleyMods.CategorizeChests.Framework
             new ItemKey(ItemType.Weapon, 40), // Abby's Planchette
             new ItemKey(ItemType.Weapon, 41), // Seb's Lost Mace
             new ItemKey(ItemType.Weapon, 42), // Haley's Iron
+            new ItemKey(ItemType.Weapon, 20), // Elf Blade
+            new ItemKey(ItemType.Weapon, 34), // Galaxy Slingshot
+            new ItemKey(ItemType.Weapon, 46), // Kudgel
+            new ItemKey(ItemType.Weapon, 49), // Rapier
+            new ItemKey(ItemType.Weapon, 19), // Shadow Dagger
+            new ItemKey(ItemType.Weapon, 48), // Yeti Tooth
+
+            new ItemKey(ItemType.Boots, 515), // Cowboy Boots
         };
     }
 }
