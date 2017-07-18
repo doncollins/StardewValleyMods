@@ -19,7 +19,7 @@ namespace StardewValleyMods.LoveBubbles
 
         public override void Entry(IModHelper helper)
         {
-            new UpdateNotifier(Monitor).Check(ModManifest.Name, ModManifest.Version);
+            new UpdateNotifier(Monitor).Check(ModManifest);
 
             Bubble = new TextureRegion(Game1.mouseCursors, new Rectangle(141, 465, 20, 24), zoom: true);
             Heart = new TextureRegion(Game1.mouseCursors, new Rectangle(226, 1811, 13, 12), zoom: true);

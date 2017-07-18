@@ -23,20 +23,20 @@ namespace StardewValleyMods.Common
             Monitor = monitor;
         }
 
-        public async void Check(string modName, ISemanticVersion currentVersion)
+        public async void Check(IManifest manifest)
         {
             try
             {
-                var latestVersion = await GetCurrentVersion(modName).ConfigureAwait(false);
+                var latestVersion = await GetCurrentVersion(manifest.UniqueID).ConfigureAwait(false);
 
-                if (latestVersion.IsNewerThan(currentVersion))
-                    NotifyNewVersion(modName);
+                if (latestVersion.IsNewerThan(manifest.Version))
+                    NotifyNewVersion(manifest.Name);
                 else
-                    NotifyUpToDate(modName);
+                    NotifyUpToDate(manifest.Name);
             }
             catch (Exception e)
             {
-                NotifyFailure(modName, e.Message);
+                NotifyFailure(manifest.Name, e.Message);
             }
         }
 
@@ -63,9 +63,9 @@ namespace StardewValleyMods.Common
             Game1.addHUDMessage(new HUDMessage(message, Color.Red, 3500f) {noIcon = true, timeLeft = HUDMessage.defaultTime});
         }
 
-        private async Task<ISemanticVersion> GetCurrentVersion(string modName)
+        private async Task<ISemanticVersion> GetCurrentVersion(string uniqueId)
         {
-            var manifestUrl = GetManifestUrl(modName);
+            var manifestUrl = GetManifestUrl(uniqueId);
 
             HttpWebRequest request = WebRequest.CreateHttp(manifestUrl);
             request.CachePolicy = new RequestCachePolicy(RequestCacheLevel.Revalidate);
@@ -89,9 +89,9 @@ namespace StardewValleyMods.Common
             }
         }
 
-        private string GetManifestUrl(string modName)
+        private string GetManifestUrl(string uniqueId)
         {
-            return $"https://raw.githubusercontent.com/doncollins/StardewValleyMods/stable/{modName}/manifest.json";
+            return $"https://raw.githubusercontent.com/doncollins/StardewValleyMods/stable/{uniqueId}/manifest.json";
         }
     }
 }

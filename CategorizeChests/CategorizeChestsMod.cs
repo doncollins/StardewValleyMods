@@ -27,7 +27,7 @@ namespace StardewValleyMods.CategorizeChests
 
         public override void Entry(IModHelper helper)
         {
-            new UpdateNotifier(Monitor).Check(ModManifest.Name, ModManifest.Version);
+            new UpdateNotifier(Monitor).Check(ModManifest);
 
             Config = Helper.ReadConfig<Config>();
 
