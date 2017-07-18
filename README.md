@@ -9,7 +9,7 @@ These are mods that I've created for Stardew Valley using [SMAPI](https://github
 
 ## Credits
 
-Thanks to Pathoschild for maintaining SMAPI. Portions of the code of this mod (indicated by comments in the source files) are used under the following license:
+Thanks to Pathoschild for maintaining SMAPI. Portions of the code of these mods (indicated by comments in the source files) are used under the following license:
 
 ```
 The MIT License (MIT)
