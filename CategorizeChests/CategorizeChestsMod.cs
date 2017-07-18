@@ -22,9 +22,15 @@ namespace StardewValleyMods.CategorizeChests
         private IItemDataManager ItemDataManager;
         private ISaveManager SaveManager;
 
+        /// <summary>
+        /// Where to keep the mod's per-save data.
+        /// </summary>
         private string SaveDirectory;
         private string SavePath;
 
+        /// <summary>
+        /// The entry point of the mod.
+        /// </summary>
         public override void Entry(IModHelper helper)
         {
             Config = Helper.ReadConfig<Config>();

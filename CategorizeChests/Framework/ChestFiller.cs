@@ -17,6 +17,12 @@ namespace StardewValleyMods.CategorizeChests.Framework
             Monitor = monitor;
         }
 
+        /// <summary>
+        /// Attempt to move as much as possible of the player's inventory
+        /// into the given chest, subject to the chest's capacity and its
+        /// configured list of items to accept.
+        /// </summary>
+        /// <param name="chest">The chest to put the items in.</param>
         public void DumpItemsToChest(Chest chest)
         {
             var chestData = ChestDataManager.GetChestData(chest);
@@ -45,13 +51,16 @@ namespace StardewValleyMods.CategorizeChests.Framework
         /// <summary>
         /// Attempt to move as much as possible of the given item stack into the chest.
         /// </summary>
-        /// <param name="chest">The chest to put the items in</param>
-        /// <param name="item">The items to put in the chest</param>
-        /// <returns>True if at least some of the stack was moved into the chest</returns>
+        /// <param name="chest">The chest to put the items in.</param>
+        /// <param name="item">The items to put in the chest.</param>
+        /// <returns>True if at least some of the stack was moved into the chest.</returns>
         private bool TryPutItemInChest(Chest chest, Item item)
         {
+            // we'll use this to track whether at least one thing was successfully
+            // put in the chest
             bool movedSome = false;
 
+            // Items in the chest that can stack with the given item.
             var candidates = chest.items
                 .Where(i => i != null)
                 .Where(i => i.canStackWith(item));
@@ -62,11 +71,13 @@ namespace StardewValleyMods.CategorizeChests.Framework
 
                 if (spaceLeft >= item.Stack)
                 {
+                    // we can put all of it in this stack and we're done
                     chest.grabItemFromInventory(item, Game1.player);
                     return true;
                 }
                 else if (spaceLeft > 0)
                 {
+                    // Move what we can onto the chest stack.
                     item.Stack -= spaceLeft; //TODO: is there a better way to do this?
                     recipient.addToStack(spaceLeft);
                     movedSome = true;
@@ -77,6 +88,7 @@ namespace StardewValleyMods.CategorizeChests.Framework
 
             if (ChestHasEmptySpaces(chest))
             {
+                // there's an empty space, so just put it there
                 chest.grabItemFromInventory(item, Game1.player);
                 return true;
             }
@@ -84,12 +96,20 @@ namespace StardewValleyMods.CategorizeChests.Framework
             return movedSome;
         }
 
+        /// <summary>
+        /// Check whether the given chest has any completely empty slots.
+        /// </summary>
+        /// <returns>Whether at least one slot is empty.</returns>
+        /// <param name="chest">The chest to check.</param>
         private bool ChestHasEmptySpaces(Chest chest)
         {
             return chest.items.Count < Chest.capacity
                    || chest.items.Any(i => i == null);
         }
 
+        /// <summary>
+        /// Return a list of the items in the player's inventory.
+        /// </summary>
         private IEnumerable<Item> GetInventoryItems()
         {
             return Game1.player.Items.Where(i => i != null).ToList();

@@ -2,6 +2,9 @@
 
 namespace StardewValleyMods.CategorizeChests.Interface.Widgets
 {
+    /// <summary>
+    /// A simple non-interactive sprite.
+    /// </summary>
     class Stamp : Widget
     {
         private readonly TextureRegion TextureRegion;

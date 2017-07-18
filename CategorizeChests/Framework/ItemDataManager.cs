@@ -15,9 +15,16 @@ namespace StardewValleyMods.CategorizeChests.Framework
 
         private IMonitor Monitor;
 
+        /// <summary>
+        /// A mapping of category names to the item keys belonging to that category.
+        /// </summary>
         public IDictionary<string, IEnumerable<ItemKey>> Categories => _Categories;
         IDictionary<string, IEnumerable<ItemKey>> _Categories;
 
+        /// <summary>
+        /// A mapping of item keys to a representative instance of the item they
+        /// correspond to.
+        /// </summary>
         private Dictionary<ItemKey, Item> PrototypeMap = new Dictionary<ItemKey, Item>();
 
         public ItemDataManager(IMonitor monitor)
@@ -33,6 +40,7 @@ namespace StardewValleyMods.CategorizeChests.Framework
 
                 PrototypeMap[result.ItemKey] = result.Item;
 
+                // TODO: simplify this using a KeyBy-esque function
                 var categoryName = ChooseCategoryName(result.ItemKey);
 
                 if (!categories.ContainsKey(categoryName))
@@ -43,6 +51,11 @@ namespace StardewValleyMods.CategorizeChests.Framework
             _Categories = categories;
         }
 
+        /// <summary>
+        /// Decide what category name the given item key should belong to.
+        /// </summary>
+        /// <returns>The chosen category name.</returns>
+        /// <param name="itemKey">The item key to categorize.</param>
         private string ChooseCategoryName(ItemKey itemKey)
         {
             if (itemKey.ItemType == ItemType.Object)
@@ -57,6 +70,9 @@ namespace StardewValleyMods.CategorizeChests.Framework
             }
         }
 
+        /// <summary>
+        /// Retrieve the item key appropriate for representing the given item.
+        /// </summary>
         public ItemKey GetKey(Item item)
         {
             var results = PrototypeMap.Where(p => MatchesPrototype(item, p.Value));
@@ -66,17 +82,32 @@ namespace StardewValleyMods.CategorizeChests.Framework
 
             return results.First().Key;
         }
-        
+
+        /// <summary>
+        /// Retrieve the representative item corresponding to the given key.
+        /// </summary>
         public Item GetItem(ItemKey itemKey)
         {
             return PrototypeMap[itemKey];
         }
 
+        /// <summary>
+        /// Check whether the repository contains an item corresponding to the
+        /// given key.
+        /// </summary>
         public bool HasItem(ItemKey itemKey)
         {
             return PrototypeMap.ContainsKey(itemKey);
         }
 
+        /// <summary>
+        /// Generate every item known to man, or at least those we're interested
+        /// in using for categorization.
+        /// </summary>
+        /// <remarks>
+        /// Substantially based on code from Pathoschild's LookupAnything mod.
+        /// </remarks>
+        /// <returns>A collection of all of the item entries.</returns>
         private IEnumerable<DiscoveredItem> DiscoverItems()
         {
             // get tools
@@ -140,6 +171,12 @@ namespace StardewValleyMods.CategorizeChests.Framework
             }
         }
 
+        /// <summary>
+        /// Check whether a given item should be classified as the same as the
+        /// given representative item for the purposes of categorization.
+        /// </summary>
+        /// <param name="item">The item being checked.</param>
+        /// <param name="prototype">The representative prototype item to check against.</param>
         public static bool MatchesPrototype(Item item, Item prototype)
         {
             return

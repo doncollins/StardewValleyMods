@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace StardewValleyMods.CategorizeChests.Interface.Widgets
 {
+    /// <summary>
+    /// A resizable nine-slice background.
+    /// </summary>
     class Background : Widget
     {
         public readonly NineSlice Graphic;

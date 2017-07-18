@@ -6,8 +6,17 @@ using System.Threading.Tasks;
 
 namespace StardewValleyMods.CategorizeChests.Framework
 {
+    /// <summary>
+    /// Maintains the list of items that should be excluded from the available
+    /// items to use for categorization, e.g. unobtainable items and bug items.
+    /// </summary>
     static class ItemBlacklist
     {
+        /// <summary>
+        /// Check whether a given item key is blacklisted.
+        /// </summary>
+        /// <returns>Whether the key is blacklisted.</returns>
+        /// <param name="itemKey">Item key to check.</param>
         public static bool Includes(ItemKey itemKey) => BlacklistedItemKeys.Contains(itemKey);
 
         private static readonly HashSet<ItemKey> BlacklistedItemKeys = new HashSet<ItemKey>()

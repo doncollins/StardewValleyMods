@@ -5,6 +5,10 @@ using Newtonsoft.Json.Linq;
 
 namespace StardewValleyMods.CategorizeChests.Framework.Persistence
 {
+    /// <summary>
+    /// The class responsible for reading saved data and using it to restore
+    /// the mod state.
+    /// </summary>
     class Loader
     {
         private readonly IChestDataManager ChestDataManager;
@@ -18,6 +22,10 @@ namespace StardewValleyMods.CategorizeChests.Framework.Persistence
             ItemDataManager = itemDataManager;
         }
 
+        /// <summary>
+        /// Read the given save data and use it to reconstruct the mod state.
+        /// </summary>
+        /// <param name="token">The save data.</param>
         public void LoadData(JToken token)
         {
             var serializer = new JsonSerializer();

@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 namespace StardewValleyMods.CategorizeChests.Framework
 {
+    /// <summary>
+    /// The extra data associated with a chest object, such as the list of
+    /// items it should accept.
+    /// </summary>
     class ChestData
     {
         private readonly IItemDataManager ItemDataManager;
@@ -11,6 +15,9 @@ namespace StardewValleyMods.CategorizeChests.Framework
 
         private HashSet<ItemKey> ItemsEnabled = new HashSet<ItemKey>();
 
+        /// <summary>
+        /// The set of item keys that have been assigned to this chest.
+        /// </summary>
         public IEnumerable<ItemKey> AcceptedItemKinds
         {
             get { return ItemsEnabled; }
@@ -32,19 +39,28 @@ namespace StardewValleyMods.CategorizeChests.Framework
             ItemDataManager = itemDataManager;
         }
 
+        /// <summary>
+        /// Set this chest to accept the specified kind of item.
+        /// </summary>
         public void Accept(ItemKey itemKey)
         {
             if (!ItemsEnabled.Contains(itemKey))
                 ItemsEnabled.Add(itemKey);
         }
 
-        public void Reject(ItemKey itemKey)
+		/// <summary>
+		/// Set this chest to not accept the specified kind of item.
+		/// </summary>
+		public void Reject(ItemKey itemKey)
         {
             if (ItemsEnabled.Contains(itemKey))
                 ItemsEnabled.Remove(itemKey);
         }
 
-        public void Toggle(ItemKey itemKey)
+		/// <summary>
+		/// Toggle whether this chest accepts the specified kind of item.
+		/// </summary>
+		public void Toggle(ItemKey itemKey)
         {
             if (Accepts(itemKey))
                 Reject(itemKey);
@@ -52,12 +68,18 @@ namespace StardewValleyMods.CategorizeChests.Framework
                 Accept(itemKey);
         }
 
-        public bool Accepts(Item item)
-        {
-            return Accepts(ItemDataManager.GetKey(item));
-        }
+		/// <summary>
+		/// Return whether this chest should accept the given item.
+		/// </summary>
+		public bool Accepts(Item item)
+		{
+			return Accepts(ItemDataManager.GetKey(item));
+		}
 
-        public bool Accepts(ItemKey itemKey)
+		/// <summary>
+		/// Return whether this chest accepts the given kind of item.
+		/// </summary>
+		public bool Accepts(ItemKey itemKey)
         {
             return ItemsEnabled.Contains(itemKey);
         }

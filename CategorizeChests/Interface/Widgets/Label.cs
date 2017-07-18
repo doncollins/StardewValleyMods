@@ -4,6 +4,9 @@ using StardewValley;
 
 namespace StardewValleyMods.CategorizeChests.Interface.Widgets
 {
+    /// <summary>
+    /// A simple text element.
+    /// </summary>
     class Label : Widget
     {
         private string _Text;

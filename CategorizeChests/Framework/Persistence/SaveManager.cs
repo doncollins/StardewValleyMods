@@ -5,6 +5,9 @@ using StardewValleyMods.CategorizeChests.Framework.Persistence.Legacy;
 
 namespace StardewValleyMods.CategorizeChests.Framework.Persistence
 {
+    /// <summary>
+    /// The class responsible for saving and loading the mod state.
+    /// </summary>
     class SaveManager : ISaveManager
     {
         private readonly ISemanticVersion Version;
@@ -20,6 +23,10 @@ namespace StardewValleyMods.CategorizeChests.Framework.Persistence
             ItemDataManager = itemDataManager;
         }
 
+        /// <summary>
+        /// Generate save data and write it to the given file path.
+        /// </summary>
+        /// <param name="path">The full path of the save file.</param>
         public void Save(string path)
         {
             var saver = new Saver(Version, ChestDataManager);
@@ -28,6 +35,9 @@ namespace StardewValleyMods.CategorizeChests.Framework.Persistence
             File.WriteAllText(path, json); // TODO: (use SMAPI classes if possible!)
         }
 
+        /// <summary>
+        /// Load save data from the given file path.
+        /// </summary>
         public void Load(string path)
         {
             var json = File.ReadAllText(path);
@@ -39,6 +49,14 @@ namespace StardewValleyMods.CategorizeChests.Framework.Persistence
             loader.LoadData(token);
         }
 
+        /// <summary>
+        /// Detect which version produced the given save data and return an updated
+        /// version of the data corresponding to the save format of the current version.
+        /// </summary>
+        /// <returns>The converted data suitable for consumption by the current version.</returns>
+        /// <param name="data">The unconverted data from the save file.</param>
+        // TODO: This should really return a SaveData object, since we know that
+        // it's going to end up being valid current-version data.
         private JToken ConvertVersion(JToken data)
         {
             var version = ReadVersionNumber(data);
@@ -49,6 +67,10 @@ namespace StardewValleyMods.CategorizeChests.Framework.Persistence
             return data;
         }
 
+        /// <summary>
+        /// Figure out which version of the mod produced the given save data.
+        /// </summary>
+        /// <returns>Which version produced the given save data.</returns>
         private ISemanticVersion ReadVersionNumber(JToken token)
         {
             if (token is JObject jObject)
@@ -56,6 +78,9 @@ namespace StardewValleyMods.CategorizeChests.Framework.Persistence
                 var versionString = jObject.Value<string>("Version");
                 return new SemanticVersion(versionString);
             }
+            // In 1.0.2 and older, the JSON data consisted of an array and not
+            // an object, so if we encounter that, we know it's from one of 
+            // those versions.
             else if (token is JArray)
             {
                 return new SemanticVersion("1.0.2");

@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace StardewValleyMods.CategorizeChests.Interface.Widgets
 {
+    /// <summary>
+    /// A checkbox with a label next to it, like so: [x] Foo
+    /// </summary>
     class LabeledCheckbox : Widget
     {
         public event Action<bool> OnChange;

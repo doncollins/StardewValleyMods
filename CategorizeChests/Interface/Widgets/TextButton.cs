@@ -2,6 +2,9 @@ using Microsoft.Xna.Framework;
 
 namespace StardewValleyMods.CategorizeChests.Interface.Widgets
 {
+    /// <summary>
+    /// A button shown as text on a background.
+    /// </summary>
     class TextButton : Button
     {
         private readonly Background Background;

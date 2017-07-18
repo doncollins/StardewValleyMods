@@ -2,6 +2,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace StardewValleyMods.CategorizeChests.Interface.Widgets
 {
+    /// <summary>
+    /// A button that uses a single TextureRegion to display itself.
+    /// </summary>
     class SpriteButton : Button
     {
         private readonly TextureRegion TextureRegion;

@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace StardewValleyMods.CategorizeChests.Framework.Persistence
 {
+    /// <summary>
+    /// The class responsible for producing data to be saved.
+    /// </summary>
     class Saver
     {
         private readonly ISemanticVersion Version;
@@ -21,12 +24,19 @@ namespace StardewValleyMods.CategorizeChests.Framework.Persistence
             ChestDataManager = chestDataManager;
         }
 
+        /// <summary>
+        /// Generates save data for the current state of the world and returns
+        /// a JSON string representing that save data.
+        /// </summary>
         public string DumpData()
         {
             var data = GetSerializableData();
             return JsonConvert.SerializeObject(data, new StringEnumConverter());
         }
 
+        /// <summary>
+        /// Build save data for the current game state.
+        /// </summary>
         private SaveData GetSerializableData()
         {
             return new SaveData
@@ -94,6 +104,10 @@ namespace StardewValleyMods.CategorizeChests.Framework.Persistence
             }
         }
 
+        /// <summary>
+        /// Retrieve a collection of the chest objects present in the given
+        /// location, keyed by their tile location.
+        /// </summary>
         private IDictionary<Vector2, Chest> GetLocationChests(GameLocation location)
         {
             return location.Objects

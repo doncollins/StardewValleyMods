@@ -2,6 +2,9 @@
 
 namespace StardewValleyMods.CategorizeChests.Interface.Widgets
 {
+    /// <summary>
+    /// A tooltip showing information about a particular item.
+    /// </summary>
     class ItemTooltip : Widget
     {
         public ItemTooltip(string name)

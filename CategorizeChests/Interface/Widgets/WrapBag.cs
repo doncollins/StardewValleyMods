@@ -3,6 +3,10 @@ using System;
 
 namespace StardewValleyMods.CategorizeChests.Interface.Widgets
 {
+    /// <summary>
+    /// A container that automatically positions its children in rows,
+    /// wrapping to a new row as appropriate.
+    /// </summary>
     class WrapBag : Widget
     {
         public WrapBag(int width)

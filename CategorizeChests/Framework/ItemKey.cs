@@ -2,7 +2,11 @@ using Newtonsoft.Json;
 
 namespace StardewValleyMods.CategorizeChests.Framework
 {
-    [JsonObject(MemberSerialization.OptIn)]
+    /// <summary>
+    /// A key uniquely identifying a single kind of item selectable as the
+    /// contents of a chest.
+    /// </summary>
+    [JsonObject(MemberSerialization.OptIn)] // TODO: can some of these annotations be left out?
     class ItemKey
     {
         [JsonProperty] public readonly ItemType ItemType;

@@ -8,6 +8,10 @@ using System.Linq;
 
 namespace StardewValleyMods.CategorizeChests.Interface.Widgets
 {
+    /// <summary>
+    /// A positioned, resizable element in the interface
+    /// that can also contain other elements.
+    /// </summary>
     public class Widget
     {
         Widget _Parent;

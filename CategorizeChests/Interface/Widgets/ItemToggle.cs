@@ -6,6 +6,10 @@ using StardewValleyMods.CategorizeChests.Framework;
 
 namespace StardewValleyMods.CategorizeChests.Interface.Widgets
 {
+    /// <summary>
+    /// A toggle button corresponding to a given kind of item, appearing as
+    /// the icon for that item with an appropriate tooltip.
+    /// </summary>
     class ItemToggle : Widget
     {
         private readonly IItemDataManager ItemDataManager;
