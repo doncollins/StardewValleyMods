@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="LoveBubblesMod.cs" />
+    <Compile Include="PetChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteBatchExtensions.cs" />
     <Compile Include="TextureRegion.cs" />

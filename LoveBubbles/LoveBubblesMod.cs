@@ -6,6 +6,7 @@ using StardewValley;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using StardewValley.Characters;
 using StardewValleyMods.Common;
 
 namespace StardewValleyMods.LoveBubbles
@@ -40,13 +41,29 @@ namespace StardewValleyMods.LoveBubbles
 
         private void DrawAllBubbles(bool hideWhenMilkable)
         {
-            foreach (FarmAnimal animal in GetNearbyAnimals())
+            foreach (FarmAnimal animal in GetNearbyLivestock())
             {
                 var suppress = HasProduct(animal) && hideWhenMilkable;
 
                 if (!animal.wasPet && !suppress)
                     DrawBubble(Game1.spriteBatch, animal);
             }
+
+            if (Config.IncludePets)
+            {
+                foreach (var pet in GetNearbyPets())
+                {
+                    if (!PetChecker.WasPetToday(pet))
+                        DrawBubble(Game1.spriteBatch, pet);
+                }
+            }
+        }
+
+        private IEnumerable<Pet> GetNearbyPets()
+        {
+            return Game1.currentLocation.characters
+                .Select(character => character as Pet)
+                .Where(pet => pet != null);
         }
 
         private bool HasProduct(FarmAnimal animal)
@@ -57,7 +74,7 @@ namespace StardewValleyMods.LoveBubbles
             return false;
         }
 
-        private IEnumerable<FarmAnimal> GetNearbyAnimals()
+        private IEnumerable<FarmAnimal> GetNearbyLivestock()
         {
             var location = Game1.currentLocation;
 
@@ -71,18 +88,30 @@ namespace StardewValleyMods.LoveBubbles
 
         private void DrawBubble(SpriteBatch spriteBatch, FarmAnimal animal)
         {
-            var bubblePosition = new Vector2(
+            DrawBubbleAt(spriteBatch, new Vector2(
                 animal.Position.X + animal.Sprite.getWidth() / 2,
-                animal.Position.Y - (Game1.tileSize * 4) / 3 + GetBubbleOffset());
+                animal.Position.Y - (Game1.tileSize * 4) / 3 + GetBubbleOffset()
+            ));
+        }
 
+        private void DrawBubble(SpriteBatch spriteBatch, Pet pet)
+        {
+            DrawBubbleAt(spriteBatch, new Vector2(
+                pet.Position.X + pet.Sprite.getWidth() / 2,
+                pet.Position.Y - (Game1.tileSize * 5) / 3 + GetBubbleOffset()
+            ));
+        }
+
+        private void DrawBubbleAt(SpriteBatch spriteBatch, Vector2 position)
+        {
             spriteBatch.Draw(Bubble,
-                Game1.GlobalToLocal(Game1.viewport, bubblePosition),
+                Game1.GlobalToLocal(Game1.viewport, position),
                 (Color)(Color.White * 0.75f));
 
-            var heartPosition = bubblePosition
-                + new Vector2(Bubble.Width / 2, Bubble.Height / 2)
-                - new Vector2(Heart.Width / 2, Heart.Height / 2)
-                - new Vector2(0, 4);
+            var heartPosition = position
+                                + new Vector2(Bubble.Width / 2, Bubble.Height / 2)
+                                - new Vector2(Heart.Width / 2, Heart.Height / 2)
+                                - new Vector2(0, 4);
 
             spriteBatch.Draw(Heart,
                 Game1.GlobalToLocal(Game1.viewport, heartPosition),
