@@ -27,9 +27,10 @@ namespace StardewValleyMods.CategorizeChests
 
         public override void Entry(IModHelper helper)
         {
-            new UpdateNotifier(Monitor).Check(ModManifest);
-
             Config = Helper.ReadConfig<Config>();
+
+            if (Config.CheckForUpdates)
+                new UpdateNotifier(Monitor).Check(ModManifest);
 
             SaveDirectory = Path.Combine(Helper.DirectoryPath, "savedata");
 
