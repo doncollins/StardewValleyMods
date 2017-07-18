@@ -68,7 +68,7 @@ namespace StardewValleyMods.Common
             var manifestUrl = GetManifestUrl(uniqueId);
 
             HttpWebRequest request = WebRequest.CreateHttp(manifestUrl);
-            request.CachePolicy = new RequestCachePolicy(RequestCacheLevel.Revalidate);
+            request.CachePolicy = new RequestCachePolicy(RequestCacheLevel.BypassCache);
             AssemblyName assembly = typeof(UpdateNotifier).Assembly.GetName();
             request.UserAgent = $"{assembly.Name}/{assembly.Version}";
 
