@@ -68,6 +68,17 @@ namespace StardewValleyMods.CategorizeChests.Framework
             new ItemKey(ItemType.Object, 788), // Lost Axe
             new ItemKey(ItemType.Object, 789), // Lucky Purple Shorts
             new ItemKey(ItemType.Object, 790), // Berry Basket
+            
+            new ItemKey(ItemType.Weapon, 25), // Alex's Bat
+            new ItemKey(ItemType.Weapon, 30), // Sam's Old Guitar
+            new ItemKey(ItemType.Weapon, 35), // Elliott's Pencil
+            new ItemKey(ItemType.Weapon, 36), // Maru's Wrench
+            new ItemKey(ItemType.Weapon, 37), // Harvey's Mallet
+            new ItemKey(ItemType.Weapon, 38), // Penny's Fryer
+            new ItemKey(ItemType.Weapon, 39), // Leah's Whittler
+            new ItemKey(ItemType.Weapon, 40), // Abby's Planchette
+            new ItemKey(ItemType.Weapon, 41), // Seb's Lost Mace
+            new ItemKey(ItemType.Weapon, 42), // Haley's Iron
         };
     }
 }
