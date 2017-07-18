@@ -82,9 +82,9 @@ namespace StardewValleyMods.Common
                 var manifestData = JObject.Parse(responseText);
                 var versionToken = manifestData.SelectToken("Version");
                 return new SemanticVersion(
-                    versionToken.Value<int>("Major"),
-                    versionToken.Value<int>("Minor"),
-                    versionToken.Value<int>("Patch")
+                    versionToken.Value<int>("MajorVersion"),
+                    versionToken.Value<int>("MinorVersion"),
+                    versionToken.Value<int>("PatchVersion")
                 );
             }
         }
