@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CategorizeChests", "Categor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoveBubbles", "LoveBubbles\LoveBubbles.csproj", "{3D926C36-B2AB-4EA1-AC4A-53688A310598}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Common", "Common\Common.shproj", "{1816309E-2100-409B-8B7E-227ED56D3F9B}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Common\Common.projitems*{1816309e-2100-409b-8b7e-227ed56d3f9b}*SharedItemsImports = 13

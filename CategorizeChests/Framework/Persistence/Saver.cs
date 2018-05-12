@@ -67,11 +67,11 @@ namespace StardewValleyMods.CategorizeChests.Framework.Persistence
                 // chests in constructed buildings
                 if (location is BuildableGameLocation buildableLocation)
                 {
-                    var buildings = buildableLocation.buildings.Where(b => b.indoors != null);
+                    var buildings = buildableLocation.buildings.Where(b => b.indoors.Value != null);
 
                     foreach (var building in buildings)
                     {
-                        foreach (var pair in GetLocationChests(building.indoors))
+                        foreach (var pair in GetLocationChests(building.indoors.Value))
                         {
                             yield return new ChestEntry
                             {
@@ -110,8 +110,8 @@ namespace StardewValleyMods.CategorizeChests.Framework.Persistence
         /// </summary>
         private IDictionary<Vector2, Chest> GetLocationChests(GameLocation location)
         {
-            return location.Objects
-                .Where(pair => pair.Value is Chest && ((Chest) pair.Value).playerChest)
+            return location.Objects.Pairs
+                .Where(pair => (pair.Value as Chest)?.playerChest ?? false)
                 .ToDictionary(pair => pair.Key, pair => (Chest) pair.Value);
         }
     }

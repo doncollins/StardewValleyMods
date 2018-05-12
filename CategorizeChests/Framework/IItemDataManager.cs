@@ -9,7 +9,7 @@ namespace StardewValleyMods.CategorizeChests.Framework
     /// </summary>
     interface IItemDataManager
     {
-        IDictionary<string, IEnumerable<ItemKey>> Categories { get; }
+        IDictionary<string, IList<ItemKey>> Categories { get; }
 
         ItemKey GetKey(Item item);
         Item    GetItem(ItemKey itemKey);

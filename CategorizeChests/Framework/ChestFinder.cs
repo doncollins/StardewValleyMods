@@ -18,7 +18,7 @@ namespace StardewValleyMods.CategorizeChests.Framework
                     throw new InvalidSaveDataException(
                         "Chest save data contains refrigerator data but no refrigerator exists");
 
-                return farmHouse.fridge;
+                return farmHouse.fridge.Value;
             }
             else
             {
@@ -53,7 +53,7 @@ namespace StardewValleyMods.CategorizeChests.Framework
                         throw new InvalidSaveDataException(
                             $"Can't find building named {address.BuildingName} in location named {location.Name}");
 
-                    return building.indoors;
+                    return building.indoors.Value;
                 }
                 else
                 {
