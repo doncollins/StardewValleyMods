@@ -6,7 +6,6 @@ using StardewValley;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using StardewValleyMods.Common;
 
 namespace StardewValleyMods.LoveBubbles
 {
@@ -22,10 +21,7 @@ namespace StardewValleyMods.LoveBubbles
         public override void Entry(IModHelper helper)
         {
             Config = helper.ReadConfig<Config>();
-
-            if (Config.CheckForUpdates)
-                new UpdateNotifier(Monitor).Check(ModManifest);
-
+            
             Bubble = new TextureRegion(Game1.mouseCursors, new Rectangle(141, 465, 20, 24), zoom: true);
             Heart = new TextureRegion(Game1.mouseCursors, new Rectangle(226, 1811, 13, 12), zoom: true);
             
@@ -34,7 +30,7 @@ namespace StardewValleyMods.LoveBubbles
 
         private void OnPreRenderHud()
         {
-            if (Game1.hasLoadedGame && Game1.currentLocation.isFarm)
+            if (Game1.hasLoadedGame && Game1.currentLocation.IsFarm)
                 DrawAllBubbles(HideWhenMilkable);
         }
 
@@ -44,29 +40,33 @@ namespace StardewValleyMods.LoveBubbles
             {
                 var suppress = HasProduct(animal) && hideWhenMilkable;
 
-                if (!animal.wasPet && !suppress)
+                if (!animal.wasPet.Value && !suppress)
                     DrawBubble(Game1.spriteBatch, animal);
             }
         }
 
         private bool HasProduct(FarmAnimal animal)
         {
-            if (animal.toolUsedForHarvest == "Milk Pail" || animal.toolUsedForHarvest == "Shears")
-                return animal.currentProduce > 0;
+            
+            if (animal.toolUsedForHarvest.Value == "Milk Pail" || animal.toolUsedForHarvest.Value == "Shears")
+                return animal.currentProduce.Value > 0;
 
             return false;
         }
 
         private IEnumerable<FarmAnimal> GetNearbyAnimals()
         {
-            var location = Game1.currentLocation;
-
-            if (location is AnimalHouse house)
-                return house.animals.Values;
-            else if (location is Farm farm)
-                return farm.animals.Values;
-            else
-                return Enumerable.Empty<FarmAnimal>();
+            switch (Game1.currentLocation)
+            {
+                case AnimalHouse house:
+                    return house.animals.Values;
+         
+                case Farm farm:
+                    return farm.animals.Values;
+                
+                default:
+                    return Enumerable.Empty<FarmAnimal>();
+            }
         }
 
         private void DrawBubble(SpriteBatch spriteBatch, FarmAnimal animal)

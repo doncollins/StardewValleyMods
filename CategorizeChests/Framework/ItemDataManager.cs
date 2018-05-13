@@ -18,8 +18,9 @@ namespace StardewValleyMods.CategorizeChests.Framework
         /// <summary>
         /// A mapping of category names to the item keys belonging to that category.
         /// </summary>
-        public IDictionary<string, IEnumerable<ItemKey>> Categories => _Categories;
-        IDictionary<string, IEnumerable<ItemKey>> _Categories;
+        public IDictionary<string, IList<ItemKey>> Categories => _Categories;
+
+        IDictionary<string, IList<ItemKey>> _Categories;
 
         /// <summary>
         /// A mapping of item keys to a representative instance of the item they
@@ -31,7 +32,7 @@ namespace StardewValleyMods.CategorizeChests.Framework
         {
             Monitor = monitor;
 
-            var categories = new Dictionary<string, IEnumerable<ItemKey>>();
+            var categories = new Dictionary<string, IList<ItemKey>>();
 
             foreach (var result in DiscoverItems())
             {
@@ -44,8 +45,10 @@ namespace StardewValleyMods.CategorizeChests.Framework
                 var categoryName = ChooseCategoryName(result.ItemKey);
 
                 if (!categories.ContainsKey(categoryName))
-                    categories[categoryName] = new List<ItemKey>();
-                (categories[categoryName] as List<ItemKey>).Add(result.ItemKey);
+                    categories[categoryName] = new List<ItemKey>() {result.ItemKey};
+
+                else
+                    categories[categoryName].Add(result.ItemKey);
             }
 
             _Categories = categories;
@@ -185,18 +188,18 @@ namespace StardewValleyMods.CategorizeChests.Framework
                     item.GetType() == prototype.GetType()
                     || prototype.GetType() == typeof(StardewObject) && item.GetType() == typeof(ColoredObject)
                 )
-                && item.category == prototype.category
-                && item.parentSheetIndex == prototype.parentSheetIndex
+                && item.Category == prototype.Category
+                && item.ParentSheetIndex == prototype.ParentSheetIndex
 
                 // same discriminators
                 && (item as Boots)?.indexInTileSheet == (prototype as Boots)?.indexInTileSheet
-                && (item as BreakableContainer)?.type == (prototype as BreakableContainer)?.type
+                && (item as BreakableContainer)?.Type == (prototype as BreakableContainer)?.Type
                 && (item as Fence)?.isGate == (prototype as Fence)?.isGate
                 && (item as Fence)?.whichType == (prototype as Fence)?.whichType
                 && (item as Hat)?.which == (prototype as Hat)?.which
                 && (item as Ring)?.indexInTileSheet == (prototype as Ring)?.indexInTileSheet
                 && (item as MeleeWeapon)?.type == (prototype as MeleeWeapon)?.type
-                && (item as MeleeWeapon)?.initialParentTileIndex == (prototype as MeleeWeapon)?.initialParentTileIndex
+                && (item as MeleeWeapon)?.InitialParentTileIndex == (prototype as MeleeWeapon)?.InitialParentTileIndex
                 ;
         }
     }

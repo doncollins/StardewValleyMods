@@ -8,7 +8,6 @@ using StardewValleyMods.CategorizeChests.Framework;
 using StardewValleyMods.CategorizeChests.Framework.Persistence;
 using StardewValleyMods.CategorizeChests.Interface;
 using StardewValleyMods.CategorizeChests.Interface.Widgets;
-using StardewValleyMods.Common;
 
 namespace StardewValleyMods.CategorizeChests
 {
@@ -34,10 +33,6 @@ namespace StardewValleyMods.CategorizeChests
         public override void Entry(IModHelper helper)
         {
             Config = Helper.ReadConfig<Config>();
-
-            if (Config.CheckForUpdates)
-                new UpdateNotifier(Monitor).Check(ModManifest);
-
             SaveDirectory = Path.Combine(Helper.DirectoryPath, "savedata");
 
             if (!Directory.Exists(SaveDirectory))
@@ -103,15 +98,13 @@ namespace StardewValleyMods.CategorizeChests
 
         private void CreateMenu(ItemGrabMenu itemGrabMenu)
         {
-            var chest = itemGrabMenu.behaviorOnItemGrab?.Target as Chest;
-
-            if (chest != null)
-            {
-                WidgetHost = new WidgetHost();
-                var overlay = new ChestOverlay(itemGrabMenu, chest, Config, ChestDataManager, ChestFiller, ItemDataManager,
-                    WidgetHost.TooltipManager);
-                WidgetHost.RootWidget.AddChild(overlay);
-            }
+            if (!(itemGrabMenu.behaviorOnItemGrab?.Target is Chest chest))
+                return;
+            
+            WidgetHost = new WidgetHost();
+            var overlay = new ChestOverlay(itemGrabMenu, chest, Config, ChestDataManager, ChestFiller, ItemDataManager,  
+                WidgetHost.TooltipManager);
+            WidgetHost.RootWidget.AddChild(overlay);
         }
 
         private void ClearMenu()
